@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { spawn } from "child_process";
 import path from "path";
+import fs from 'fs';
 
 export async function POST(request: Request) {
   try {
@@ -114,7 +115,7 @@ predict_email(email_text)
 
     // Write the script to a temporary file
     const scriptPath = path.join(process.cwd(), "temp_phishing_script.py");
-    require("fs").writeFileSync(scriptPath, pythonScript);
+    fs.writeFileSync(scriptPath, pythonScript);
 
     // Run the Python script
     const pythonProcess = spawn("python", [scriptPath]);
@@ -133,7 +134,7 @@ predict_email(email_text)
     return await new Promise<Response>((resolve) => {
       pythonProcess.on("close", (code) => {
         // Clean up the temporary file
-        require("fs").unlinkSync(scriptPath);
+        fs.unlinkSync(scriptPath);
 
         if (code !== 0) {
           resolve(
