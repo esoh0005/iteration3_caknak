@@ -130,7 +130,7 @@ predict_email(email_text)
       error += data.toString();
     });
 
-    return new Promise((resolve) => {
+    return await new Promise<Response>((resolve) => {
       pythonProcess.on("close", (code) => {
         // Clean up the temporary file
         require("fs").unlinkSync(scriptPath);
