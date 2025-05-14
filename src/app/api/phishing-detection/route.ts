@@ -5,7 +5,7 @@ import fs from 'fs';
 
 export async function POST(request: Request) {
   try {
-    const { email }: { email?: string } = await request.json();
+    const { email } = (await request.json()) as { email?: string };
 
     if (!email) {
       return NextResponse.json(
@@ -147,7 +147,7 @@ predict_email(email_text)
         }
 
         try {
-          const parsedResult: Record<string, unknown> = JSON.parse(result);
+          const parsedResult = JSON.parse(result) as Record<string, unknown>;
           resolve(NextResponse.json(parsedResult));
         } catch (e) {
           const message = e instanceof Error ? e.message : String(e);
