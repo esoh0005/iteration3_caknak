@@ -5,7 +5,9 @@ import fs from 'fs';
 
 export async function POST(request: Request) {
   try {
-    const { email } = (await request.json()) as { email?: string };
+    // Safely parse request.json()
+    const body: unknown = await request.json();
+    const email = typeof (body as { email?: unknown }).email === 'string' ? (body as { email: string }).email : undefined;
 
     if (!email) {
       return NextResponse.json(
@@ -146,8 +148,10 @@ predict_email(email_text)
           return;
         }
 
+        // Safely parse JSON.parse(result)
+        let parsedResult: Record<string, unknown> = {};
         try {
-          const parsedResult = JSON.parse(result) as Record<string, unknown>;
+          parsedResult = JSON.parse(result);
           resolve(NextResponse.json(parsedResult));
         } catch (e) {
           const message = e instanceof Error ? e.message : String(e);
