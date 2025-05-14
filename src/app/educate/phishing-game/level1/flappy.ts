@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
           playSound('point');
         }
       });
-      while (pipes.length && pipes[0].x + pipes[0].width < 0) pipes.shift();
+      while (pipes.length && pipes[0] && pipes[0].x + pipes[0].width < 0) pipes.shift();
     }
   
     function drawPipes() {
