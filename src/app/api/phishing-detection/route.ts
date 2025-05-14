@@ -123,11 +123,11 @@ predict_email(email_text)
     let result = "";
     let error = "";
 
-    pythonProcess.stdout.on("data", (data) => {
+    pythonProcess.stdout.on("data", (data: Buffer) => {
       result += data.toString();
     });
 
-    pythonProcess.stderr.on("data", (data) => {
+    pythonProcess.stderr.on("data", (data: Buffer) => {
       error += data.toString();
     });
 
