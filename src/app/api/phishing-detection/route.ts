@@ -149,19 +149,21 @@ predict_email(email_text)
         try {
           const parsedResult = JSON.parse(result);
           resolve(NextResponse.json(parsedResult));
-        } catch (e: any) {
+        } catch (e) {
+          const message = e instanceof Error ? e.message : String(e);
           resolve(
             NextResponse.json(
-              { error: "Failed to parse result", details: e.message },
+              { error: "Failed to parse result", details: message },
               { status: 500 }
             )
           );
         }
       });
     });
-  } catch (error: any) {
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: "Internal server error", details: error.message },
+      { error: "Internal server error", details: message },
       { status: 500 }
     );
   }
