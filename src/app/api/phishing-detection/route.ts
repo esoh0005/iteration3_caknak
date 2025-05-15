@@ -6,7 +6,7 @@ import fs from 'fs';
 export async function POST(request: Request) {
   try {
     // Safely parse request.json()
-    const body: unknown = await request.json();
+    const body: unknown = await request.json() as { email: string };
     const email = typeof (body as { email?: unknown }).email === 'string' ? (body as { email: string }).email : undefined;
 
     if (!email) {
