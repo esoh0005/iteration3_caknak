@@ -190,7 +190,7 @@ No long paragraphs, no "Kind regards."`
       const response = await simulateScam(newApiMessages);
 
       if (response.startsWith('Sorry, there was an error') || !response.trim()) {
-        setMessages(prev => [...prev, { sender: 'System', text: response }]);
+        setMessages(_prev => [..._prev, { sender: 'System', text: response }]);
         setIsLoading(false);
         return;
       }
@@ -204,20 +204,20 @@ No long paragraphs, no "Kind regards."`
         const isRealityCheck = response.includes('REALITY CHECK');
         if (isRealityCheck) {
           const isGoodResponse = isPositiveRealityCheck(response);
-          setMessages(prev => [
-            ...prev,
+          setMessages(_prev => [
+            ..._prev,
             { sender: '', text: response, isReality: true, isGood: isGoodResponse },
           ]);
         } else {
-          setMessages(prev => [...prev, { sender: '', text: response }]);
+          setMessages(_prev => [..._prev, { sender: '', text: response }]);
         }
         return;
       }
 
-      setMessages(prev => [...prev, { sender: '', text: response }]);
+      setMessages(_prev => [..._prev, { sender: '', text: response }]);
     } catch (error: unknown) {
       const msg = error instanceof Error ? error.message : 'Unknown error';
-      setMessages(prev => [{ sender: 'System', text: 'Error sending message: ' + msg }]);
+      setMessages(_prev => [{ sender: 'System', text: 'Error sending message: ' + msg }]);
     } finally {
       setIsLoading(false);
     }
