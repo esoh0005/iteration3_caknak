@@ -1,8 +1,14 @@
 "use client";
 
+interface RiskAnalysisResult {
+  risk_score: number;
+  risk_factors: string[];
+}
+
+
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Shield, AlertTriangle, CheckCircle2, CheckCircle, XCircle, ChevronRight, X } from "lucide-react";
+import { AlertTriangle, CheckCircle2, CheckCircle, XCircle } from "lucide-react";
 import TopNav from "~/components/TopNav";
 import Footer from "~/components/Footer";
 
@@ -39,12 +45,12 @@ const TABS = ["Email Content", "Phishy Email Examples"];
 
 export default function PhishingDetection() {
   const [email, setEmail] = useState("");
-  const [result, setResult] = useState<any>(null);
+  const [result, setResult] = useState<RiskAnalysisResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [hoveredExample, setHoveredExample] = useState<number | null>(null);
-  const [showExamples, setShowExamples] = useState(false);
+  
   const [activeTab, setActiveTab] = useState("Email Content");
 
   const handleSubmit = async (e?: React.FormEvent) => {
