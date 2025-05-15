@@ -245,7 +245,7 @@ export default function PhishingDetection() {
                             <div className="whitespace-pre-wrap bg-white/60 border border-[#e2b96f] rounded-lg p-4 text-[#5b4636] text-sm flex-1 h-full">
                               {(() => {
                                 const terms: string[] = [];
-                                (result && result.risk_factors ? result.risk_factors : []).forEach((factor: string) => {
+                                (result && result?.risk_factors ?? [] ? result?.risk_factors ?? [] : []).forEach((factor: string) => {
                                   const parts = factor.split(": ");
                                   if (parts.length > 1 && typeof parts[1] === 'string') {
                                     parts[1].split(",").forEach((t) => {
@@ -324,12 +324,12 @@ export default function PhishingDetection() {
                   style={{ height: '100%' }}
                 >
                   <div className="flex flex-col items-center mb-2">
-                    {getResultIcon(result.risk_score)}
+                    {getResultIcon(result?.risk_score ?? 0)}
                     <h2 className="text-2xl font-bold text-[#222] mt-2 text-center">
-                      {getResultTitle(result.risk_score)}
+                      {getResultTitle(result?.risk_score ?? 0)}
                     </h2>
                     <p className="text-[#5b4636] text-center mt-1">
-                      {getResultDesc(result.risk_score)}
+                      {getResultDesc(result?.risk_score ?? 0)}
                     </p>
                   </div>
 
@@ -337,14 +337,14 @@ export default function PhishingDetection() {
                   <div className="bg-white/80 rounded-xl p-4 mb-6">
                     <div className="flex items-center justify-between mb-2">
                       <span className="text-lg font-semibold text-[#5b4636]">Risk Score</span>
-                      <span className="text-2xl font-bold text-[#5b4636]">{result.risk_score}/100</span>
+                      <span className="text-2xl font-bold text-[#5b4636]">{result?.risk_score ?? 0}/100</span>
                     </div>
                     <div className="w-full h-6 bg-gray-200 rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
-                        animate={{ width: `${result.risk_score}%` }}
+                        animate={{ width: `${result?.risk_score ?? 0}%` }}
                         transition={{ duration: 1, ease: "easeOut" }}
-                        className={`h-full ${getRiskBarColor(result.risk_score)}`}
+                        className={`h-full ${getRiskBarColor(result?.risk_score ?? 0)}`}
                       />
                     </div>
                   </div>
@@ -354,9 +354,9 @@ export default function PhishingDetection() {
                     {/* Potential Risk Factors */}
                     <div className="md:w-1/2 w-full">
                       <h3 className="text-xl font-bold text-[#5b4636] mb-3">Potential Risk Factors</h3>
-                      {result.risk_factors && result.risk_factors.length > 0 ? (
+                      {result?.risk_factors ?? [] && result?.risk_factors ?? [].length > 0 ? (
                         <div className="space-y-2">
-                          {result.risk_factors.map((factor: string, idx: number) => {
+                          {result?.risk_factors ?? [].map((factor: string, idx: number) => {
                             const [description, terms] = factor.split(': ');
                             return (
                               <div key={idx} className="bg-white/80 border-2 border-[#e2b96f] rounded-lg px-3 py-2 text-sm">
